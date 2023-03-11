@@ -6,6 +6,6 @@ import org.example.model.entities.Department;
 
 public interface DepartmentRepository {
     void addDepartment(Department department) throws DataException;
-    void deleteDepartment(long id) throws EntityNotFoundException, DataException;
+    void deleteDepartmentById(long id) throws EntityNotFoundException, DataException;
     Iterable<Department> findDepartmentByName(String departmentNamePart) throws DataException;
 }

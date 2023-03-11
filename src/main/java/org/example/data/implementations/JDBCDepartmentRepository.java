@@ -10,7 +10,6 @@ import org.example.model.entities.Sex;
 import static org.example.data.JDBCConstants.*;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +35,7 @@ public class JDBCDepartmentRepository implements DepartmentRepository {
     }
 
     @Override
-    public void deleteDepartment(long id) throws EntityNotFoundException, DataException {
+    public void deleteDepartmentById(long id) throws EntityNotFoundException, DataException {
         try(PreparedStatement ps = con.prepareStatement(DELETE_DEPARTMENT)){
             ps.setLong(1, id);
             int result = ps.executeUpdate();

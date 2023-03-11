@@ -18,4 +18,32 @@ public class Employee {
         this.sex = sex;
         this.department = department;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

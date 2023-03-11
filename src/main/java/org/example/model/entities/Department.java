@@ -16,6 +16,14 @@ public class Department {
         this.maxCapacity = maxCapacity;
     }
 
+    public Department(long id, String name, String address, int maxCapacity, Set<Employee> employeeSet) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.maxCapacity = maxCapacity;
+        this.employeeSet = employeeSet;
+    }
+
     public long getId() {
         return id;
     }
@@ -34,5 +42,9 @@ public class Department {
 
     public void setEmployeesSet(Set<Employee> employees) {
         this.employeeSet = employees;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
