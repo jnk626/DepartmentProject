@@ -11,8 +11,8 @@ public class JDBCConstants {
             """;
 
     public static final String INSERT_EMPLOYEE_RETURNING_ID = """
-            INSERT INTO employee(id_employee, firstname, lastname, hire_date, sex, id_department)
-            VALUES (nextval('employee_sequence'), ?, ?, ?, ?, ?)
+            INSERT INTO employee(id_employee, firstname, lastname, sex, id_department)
+            VALUES (nextval('employee_sequence'), ?, ?, ?, ?)
             RETURNING id_employee
             """;
     public static final String DELETE_DEPARTMENT = """
