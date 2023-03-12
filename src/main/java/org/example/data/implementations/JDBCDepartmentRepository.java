@@ -21,13 +21,12 @@ public class JDBCDepartmentRepository implements DepartmentRepository {
         this.con = con;
     }
     @Override
-    public int addDepartment(Department department) throws DataException {
-        try(PreparedStatement ps = con.prepareStatement(INSERT_DEPARTMENT_RETURNING_ID)) {
+    public void addDepartment(Department department) throws DataException {
+        try(PreparedStatement ps = con.prepareStatement(INSERT_DEPARTMENT)) {
             ps.setString(1, department.getName());
             ps.setString(2, department.getAddress());
             ps.setInt(3, department.getMaxCapacity());
-            int added = ps.executeUpdate();
-            return added;
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataException("Error accessing the database",e);

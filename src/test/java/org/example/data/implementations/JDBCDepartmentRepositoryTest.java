@@ -1,6 +1,7 @@
 package org.example.data.implementations;
 
 import org.example.data.exceptions.DataException;
+import org.example.data.exceptions.EntityNotFoundException;
 import org.example.model.entities.Department;
 import org.example.model.entities.Employee;
 import org.example.model.entities.Sex;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import static org.example.data.JDBCConstants.URL;
 import static org.example.data.JDBCConstants.USERNAME;
@@ -23,6 +25,7 @@ public class JDBCDepartmentRepositoryTest {
     private Department d1;
     private Department d2;
     private Department d3;
+    private Department d4;
     private Employee e1;
     private Employee e2;
     private Employee e3;
@@ -38,9 +41,12 @@ public class JDBCDepartmentRepositoryTest {
         d1 = new Department(0, DEPARTMENT1_NAME, DEPARTMENT1_ADDRESS, DEPARTMENT1_CAPACITY, null);
         d2 = new Department(0, DEPARTMENT2_NAME, DEPARTMENT2_ADDRESS, DEPARTMENT2_CAPACITY, null);
         d3 = new Department(0, DEPARTMENT3_NAME, DEPARTMENT3_ADDRESS, DEPARTMENT3_CAPACITY, null);
+        d4 = new Department(0, DEPARTMENT4_NAME, DEPARTMENT4_ADDRESS, DEPARTMENT4_CAPACITY, null);
         // ---Departments Insertions---
         d1.setId(insertDepartment(d1, con));
         d2.setId(insertDepartment(d2, con));
+        //d3 is inserted by test addDepartment_checks_if_added()
+        d4.setId(insertDepartment(d4, con));
         // ---Employees---
         e1 = new Employee(0, EMPLOYEE1_FIRSTNAME, EMPLOYEE12_LASTNAME, null, EMPLOYEE1_SEX, d1);
         e2 = new Employee(0, EMPLOYEE2_FIRSTNAME, EMPLOYEE12_LASTNAME, null, EMPLOYEE2_SEX, d1);
@@ -57,9 +63,7 @@ public class JDBCDepartmentRepositoryTest {
     @AfterEach
     void tearDown() {
         try {
-            if (con != null) {
-                con.rollback();
-            }
+            con.rollback();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -69,8 +73,8 @@ public class JDBCDepartmentRepositoryTest {
     @Test
     void addDepartment_checks_if_added() {
         try {
-            int added = repo.addDepartment(d3);
-            assertEquals(1,added);
+            repo.addDepartment(d3);
+            assertTrue(findDepartmentByName(d3.getName(), con).isPresent());
         } catch (DataException e) {
             e.printStackTrace();
         }
@@ -79,7 +83,12 @@ public class JDBCDepartmentRepositoryTest {
 
     @Test
     void deleteDepartmentById_checks_if_still_present(){
-
+        try {
+            repo.deleteDepartmentById(d4.getId());
+            assertFalse(findDepartmentByName(d4.getName(), con).isPresent());
+        } catch (DataException | EntityNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

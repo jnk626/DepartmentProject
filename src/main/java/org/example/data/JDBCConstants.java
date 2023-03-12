@@ -4,6 +4,10 @@ public class JDBCConstants {
     public static final String URL = "jdbc:postgresql://localhost:5432/org";
     public static final String USERNAME = "postgresMaster";
     public static final String PASSWORD = "goPostgresGo";
+    public static final String INSERT_DEPARTMENT = """
+            INSERT INTO department(id_department, name, address, max_capacity)
+            VALUES (nextval('department_sequence'), ?, ?, ?)
+            """;
     public static final String INSERT_DEPARTMENT_RETURNING_ID = """
             INSERT INTO department(id_department, name, address, max_capacity)
             VALUES (nextval('department_sequence'), ?, ?, ?)
